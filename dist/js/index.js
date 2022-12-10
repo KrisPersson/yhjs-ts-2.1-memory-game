@@ -10,6 +10,12 @@ function isGameWon() {
         overlayEl.classList.toggle('show');
     }
 }
+function shuffleCards() {
+    allCardEl.forEach(card => {
+        const thisCard = card;
+        thisCard.style.order = Math.round(Math.random() * (amtOfPairsInGame * 2)).toString();
+    });
+}
 function startNewGame() {
     allCardEl.forEach(card => {
         const thisCard = card;
@@ -20,6 +26,7 @@ function startNewGame() {
     });
     pickedCards = [];
     foundPairs = [];
+    shuffleCards();
 }
 overlayCloseBtn.addEventListener('click', () => {
     overlayEl.classList.toggle('show');
@@ -45,7 +52,6 @@ allCardEl.forEach(card => {
     });
 });
 function compareCards(pickedCards) {
-    console.log('Started comparing', pickedCards);
     if (pickedCards[0] === pickedCards[1]) {
         foundPairs.push(pickedCards[0]);
     }
@@ -53,8 +59,11 @@ function compareCards(pickedCards) {
         allCardEl.forEach(card => {
             const thisCard = card;
             if (thisCard.classList.contains('flip') && pickedCards.indexOf(thisCard.getAttribute('data-card')) !== -1) {
-                thisCard.classList.toggle('flip');
+                setTimeout(() => {
+                    thisCard.classList.toggle('flip');
+                }, 1000);
             }
         });
     }
 }
+shuffleCards();

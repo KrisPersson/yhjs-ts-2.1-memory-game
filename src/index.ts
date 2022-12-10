@@ -1,4 +1,3 @@
-
 const allCardEl: NodeList = document.querySelectorAll('.memory-card') as NodeList
 const overlayEl: HTMLElement = document.querySelector('.overlay') as HTMLElement
 const overlayCloseBtn: HTMLElement = document.querySelector('.close') as HTMLElement
@@ -14,6 +13,13 @@ function isGameWon(): void {
     }
 }
 
+function shuffleCards() {
+    allCardEl.forEach(card => {
+        const thisCard: HTMLElement = card as HTMLElement
+        thisCard.style.order = Math.round(Math.random() * (amtOfPairsInGame * 2)).toString()
+    })
+}
+
 function startNewGame() {
     allCardEl.forEach(card => {
         const thisCard: HTMLElement = card as HTMLElement
@@ -24,6 +30,7 @@ function startNewGame() {
     })
     pickedCards = []
     foundPairs = []
+    shuffleCards()
 }
 
 
@@ -56,16 +63,19 @@ allCardEl.forEach(card => {
 })
 
 function compareCards(pickedCards: string[]): void {
-    console.log('Started comparing', pickedCards)
     if (pickedCards[0] === pickedCards[1]) {
         foundPairs.push(pickedCards[0])
     } else {
         allCardEl.forEach(card => {
             const thisCard: HTMLElement = card as HTMLElement
             if (thisCard.classList.contains('flip') && pickedCards.indexOf(thisCard.getAttribute('data-card')) !== -1) {
-                thisCard.classList.toggle('flip')
+                setTimeout(() => {
+                    thisCard.classList.toggle('flip')
+                }, 1000);
             }
         })
     }
 
 }
+
+shuffleCards()
