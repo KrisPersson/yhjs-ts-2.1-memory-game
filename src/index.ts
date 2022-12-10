@@ -24,7 +24,6 @@ function startNewGame() {
     allCardEl.forEach(card => {
         const thisCard: HTMLElement = card as HTMLElement
         if (thisCard.classList.contains('flip')) {
-            // console.log(cardId)
             thisCard.classList.toggle('flip') 
         }
     })
@@ -49,7 +48,7 @@ allCardEl.forEach(card => {
 
         pickedCard.classList.toggle('flip')
 
-        const cardId: string = pickedCard.getAttribute('data-card')
+        const cardId: string = pickedCard.getAttribute('data-card') as string
 
         if (pickedCards.length < 2 && foundPairs.indexOf(cardId) === -1) {
             pickedCards.push(cardId)
@@ -68,7 +67,8 @@ function compareCards(pickedCards: string[]): void {
     } else {
         allCardEl.forEach(card => {
             const thisCard: HTMLElement = card as HTMLElement
-            if (thisCard.classList.contains('flip') && pickedCards.indexOf(thisCard.getAttribute('data-card')) !== -1) {
+            const dataCard: string = thisCard.getAttribute('data-card') as string
+            if (thisCard.classList.contains('flip') && pickedCards.indexOf(dataCard) !== -1) {
                 setTimeout(() => {
                     thisCard.classList.toggle('flip')
                 }, 1000);
@@ -78,4 +78,4 @@ function compareCards(pickedCards: string[]): void {
 
 }
 
-shuffleCards()
+startNewGame()

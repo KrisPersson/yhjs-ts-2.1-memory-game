@@ -1,3 +1,4 @@
+"use strict";
 const allCardEl = document.querySelectorAll('.memory-card');
 const overlayEl = document.querySelector('.overlay');
 const overlayCloseBtn = document.querySelector('.close');
@@ -20,7 +21,6 @@ function startNewGame() {
     allCardEl.forEach(card => {
         const thisCard = card;
         if (thisCard.classList.contains('flip')) {
-            // console.log(cardId)
             thisCard.classList.toggle('flip');
         }
     });
@@ -58,7 +58,8 @@ function compareCards(pickedCards) {
     else {
         allCardEl.forEach(card => {
             const thisCard = card;
-            if (thisCard.classList.contains('flip') && pickedCards.indexOf(thisCard.getAttribute('data-card')) !== -1) {
+            const dataCard = thisCard.getAttribute('data-card');
+            if (thisCard.classList.contains('flip') && pickedCards.indexOf(dataCard) !== -1) {
                 setTimeout(() => {
                     thisCard.classList.toggle('flip');
                 }, 1000);
@@ -66,4 +67,4 @@ function compareCards(pickedCards) {
         });
     }
 }
-shuffleCards();
+startNewGame();
